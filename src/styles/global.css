@@ -76,6 +76,27 @@
   --section-px-desktop: 2.5rem;  /* matches hero lg:px-10 */
 }
 
+/* ==========================================================
+   CHANGED: MOBILE HEADING SIZES (phones under 640px only)
+   The clamp() minimums above were too large for phones, so
+   on small screens these fixed values replace them.
+   From 640px upwards nothing changes — tablet and desktop
+   keep the exact sizes defined in @theme.
+
+   This block is outside @theme and @layer on purpose, so it
+   overrides the values above.
+   ========================================================== */
+@media (max-width: 639px) {
+  :root {
+    --text-h1: 1.9rem;    /* was min 2.5rem  (40px) → now ~30px */
+    --text-h2: 1.6rem;    /* was min 2rem    (32px) → now ~26px */
+    --text-h3: 1.3rem;    /* was min 1.5rem  (24px) → now ~21px */
+    --text-h4: 1.1rem;    /* was min 1.2rem  (19px) → now ~18px */
+    --text-h5: 1.1rem;    /* was 1.25rem */
+    --text-h6: 1rem;      /* was 1.05rem */
+  }
+}
+
 @layer utilities {
   /* Standard vertical rhythm for a full section — use on every
      top-level <section>. Matches the hero's own spacing. */

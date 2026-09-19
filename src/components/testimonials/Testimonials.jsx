@@ -89,19 +89,29 @@ const REVIEWS = [
 ];
 
 /*
-  6 testimonials
-  2 cards visible at a time
+  DESKTOP / TABLET
+  2 testimonials visible at a time
 
   1 + 2
   3 + 4
   5 + 6
+
+  MOBILE
+  1
+  2
+  3
+  4
+  5
+  6
 */
 
-const SLIDES = [
+const DESKTOP_SLIDES = [
   [REVIEWS[0], REVIEWS[1]],
   [REVIEWS[2], REVIEWS[3]],
   [REVIEWS[4], REVIEWS[5]],
 ];
+
+const MOBILE_SLIDES = REVIEWS.map((review) => [review]);
 
 function Stars({ count = 5 }) {
   return (
@@ -134,12 +144,13 @@ function ReviewCard({ review }) {
         min-w-0
         flex-1
         flex-col
-        rounded-[22px]
+        rounded-[18px]
         border
         border-line
         bg-surface-2
-        p-6
+        p-4
         shadow-[0_10px_35px_rgba(76,29,149,0.04)]
+        sm:rounded-[22px]
         sm:p-7
       "
     >
@@ -148,17 +159,20 @@ function ReviewCard({ review }) {
         <span
           className="
             grid
-            h-10
-            w-10
+            h-9
+            w-9
             place-items-center
             rounded-full
             bg-brand/10
             text-brand
+            sm:h-10
+            sm:w-10
           "
         >
           <Quote
-            size={17}
+            size={15}
             strokeWidth={1.8}
+            className="sm:h-[17px] sm:w-[17px]"
           />
         </span>
 
@@ -168,12 +182,15 @@ function ReviewCard({ review }) {
       {/* Testimonial text */}
       <p
         className="
-          mt-5
-          min-h-[135px]
-          text-[14px]
-          leading-[1.75]
+          mt-4
+          min-h-0
+          text-[13px]
+          leading-[1.65]
           text-ink
+          sm:mt-5
+          sm:min-h-[135px]
           sm:text-[14.5px]
+          sm:leading-[1.75]
         "
       >
         "{review.quote}"
@@ -182,13 +199,16 @@ function ReviewCard({ review }) {
       {/* Person */}
       <div
         className="
-          mt-6
+          mt-5
           flex
           items-center
-          gap-3
+          gap-2.5
           border-t
           border-line
-          pt-5
+          pt-4
+          sm:mt-6
+          sm:gap-3
+          sm:pt-5
         "
       >
         <img
@@ -196,14 +216,16 @@ function ReviewCard({ review }) {
           alt={review.name}
           loading="lazy"
           className="
-            h-12
-            w-12
+            h-10
+            w-10
             shrink-0
             rounded-full
             object-cover
             object-center
             ring-2
             ring-brand/10
+            sm:h-12
+            sm:w-12
           "
         />
 
@@ -211,9 +233,10 @@ function ReviewCard({ review }) {
           <p
             className="
               truncate
-              text-[13.5px]
+              text-[12.5px]
               font-semibold
               text-ink
+              sm:text-[13.5px]
             "
           >
             {review.name}
@@ -222,8 +245,9 @@ function ReviewCard({ review }) {
           <p
             className="
               truncate
-              text-[11.5px]
+              text-[10px]
               text-faint
+              sm:text-[11.5px]
             "
           >
             {review.role} · {review.org}
@@ -235,34 +259,63 @@ function ReviewCard({ review }) {
 }
 
 export default function Testimonials() {
-  const [activeSlide, setActiveSlide] = useState(0);
-
   /*
-    AUTO SLIDE
-
-    1 → 2 → 3 → 1 → 2 → 3
-
-    Always moves forward.
+    Separate slide index for desktop and mobile.
+    This allows mobile to show one card at a time
+    while desktop continues showing two cards.
   */
+
+  const [desktopSlide, setDesktopSlide] = useState(0);
+  const [mobileSlide, setMobileSlide] = useState(0);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  /* Detect mobile screen */
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  /* Auto slide */
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveSlide((previous) => {
-        if (previous >= SLIDES.length - 1) {
-          return 0;
-        }
+      if (isMobile) {
+        setMobileSlide((previous) => {
+          if (previous >= MOBILE_SLIDES.length - 1) {
+            return 0;
+          }
 
-        return previous + 1;
-      });
+          return previous + 1;
+        });
+      } else {
+        setDesktopSlide((previous) => {
+          if (previous >= DESKTOP_SLIDES.length - 1) {
+            return 0;
+          }
+
+          return previous + 1;
+        });
+      }
     }, SLIDE_TIME);
 
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [isMobile]);
 
-  const nextSlide = () => {
-    setActiveSlide((previous) => {
-      if (previous >= SLIDES.length - 1) {
+  /* Desktop navigation */
+  const nextDesktop = () => {
+    setDesktopSlide((previous) => {
+      if (previous >= DESKTOP_SLIDES.length - 1) {
         return 0;
       }
 
@@ -270,10 +323,31 @@ export default function Testimonials() {
     });
   };
 
-  const previousSlide = () => {
-    setActiveSlide((previous) => {
+  const previousDesktop = () => {
+    setDesktopSlide((previous) => {
       if (previous === 0) {
-        return SLIDES.length - 1;
+        return DESKTOP_SLIDES.length - 1;
+      }
+
+      return previous - 1;
+    });
+  };
+
+  /* Mobile navigation */
+  const nextMobile = () => {
+    setMobileSlide((previous) => {
+      if (previous >= MOBILE_SLIDES.length - 1) {
+        return 0;
+      }
+
+      return previous + 1;
+    });
+  };
+
+  const previousMobile = () => {
+    setMobileSlide((previous) => {
+      if (previous === 0) {
+        return MOBILE_SLIDES.length - 1;
       }
 
       return previous - 1;
@@ -312,15 +386,11 @@ export default function Testimonials() {
             ease: EASE,
           }}
           className="
-            mb-10
+            mb-8
             max-w-[650px]
             sm:mb-14
           "
         >
-          <span className="section-eyebrow">
-            Client stories
-          </span>
-
           <h2 className="text-ink">
             Trusted by teams that{" "}
             <span className="display-italic">
@@ -334,13 +404,166 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        {/* Carousel */}
-        <div className="relative">
+        {/* =====================================================
+            MOBILE CAROUSEL
+        ====================================================== */}
+
+        <div className="relative sm:hidden">
+
+          {/* Mobile Previous Button */}
+          <button
+            type="button"
+            onClick={previousMobile}
+            aria-label="Previous testimonial"
+            className="
+              absolute
+              left-0
+              top-1/2
+              z-20
+              grid
+              h-8
+              w-8
+              -translate-x-[25%]
+              -translate-y-1/2
+              place-items-center
+              rounded-full
+              border
+              border-line
+              bg-page-bg
+              text-ink
+              shadow-sm
+              transition-all
+              duration-500
+              hover:border-brand/30
+              hover:text-brand
+            "
+          >
+            <ChevronLeft size={15} />
+          </button>
+
+          {/* Mobile Next Button */}
+          <button
+            type="button"
+            onClick={nextMobile}
+            aria-label="Next testimonial"
+            className="
+              absolute
+              right-0
+              top-1/2
+              z-20
+              grid
+              h-8
+              w-8
+              translate-x-[25%]
+              -translate-y-1/2
+              place-items-center
+              rounded-full
+              border
+              border-line
+              bg-page-bg
+              text-ink
+              shadow-sm
+              transition-all
+              duration-500
+              hover:border-brand/30
+              hover:text-brand
+            "
+          >
+            <ChevronRight size={15} />
+          </button>
+
+          {/* One card per mobile slide */}
+          <div className="overflow-hidden px-1">
+            <motion.div
+              className="flex"
+              animate={{
+                x: `${mobileSlide * -100}%`,
+              }}
+              transition={{
+                duration: ANIMATION_TIME,
+                ease: EASE,
+              }}
+              style={{
+                willChange: "transform",
+              }}
+            >
+              {MOBILE_SLIDES.map((slide, slideIndex) => (
+                <div
+                  key={slideIndex}
+                  className="
+                    flex
+                    min-w-full
+                    px-1
+                  "
+                >
+                  {slide.map((review) => (
+                    <div
+                      key={review.id}
+                      className="
+                        flex
+                        min-w-0
+                        w-full
+                      "
+                    >
+                      <ReviewCard review={review} />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Mobile Dots */}
+          <div className="mt-6 flex items-center justify-center gap-1.5">
+            {MOBILE_SLIDES.map((_, index) => {
+              const isActive = mobileSlide === index;
+
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setMobileSlide(index)}
+                  aria-label={`Show testimonial ${index + 1}`}
+                  className="
+                    flex
+                    h-5
+                    w-4
+                    items-center
+                    justify-center
+                  "
+                >
+                  <motion.span
+                    animate={{
+                      width: isActive ? 16 : 5,
+                      opacity: isActive ? 1 : 0.35,
+                    }}
+                    transition={{
+                      duration: 0.55,
+                      ease: EASE,
+                    }}
+                    className="
+                      block
+                      h-[5px]
+                      rounded-full
+                      bg-brand
+                    "
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* =====================================================
+            DESKTOP / TABLET CAROUSEL
+        ====================================================== */}
+
+        <div className="relative hidden sm:block">
 
           {/* Previous Button */}
           <button
             type="button"
-            onClick={previousSlide}
+            onClick={previousDesktop}
             aria-label="Previous testimonials"
             className="
               absolute
@@ -373,7 +596,7 @@ export default function Testimonials() {
           {/* Next Button */}
           <button
             type="button"
-            onClick={nextSlide}
+            onClick={nextDesktop}
             aria-label="Next testimonials"
             className="
               absolute
@@ -403,12 +626,12 @@ export default function Testimonials() {
             <ChevronRight size={18} />
           </button>
 
-          {/* Sliding Cards */}
+          {/* Two cards per slide */}
           <div className="overflow-hidden">
             <motion.div
               className="flex"
               animate={{
-                x: `${activeSlide * -100}%`,
+                x: `${desktopSlide * -100}%`,
               }}
               transition={{
                 duration: ANIMATION_TIME,
@@ -418,7 +641,7 @@ export default function Testimonials() {
                 willChange: "transform",
               }}
             >
-              {SLIDES.map((slide, slideIndex) => (
+              {DESKTOP_SLIDES.map((slide, slideIndex) => (
                 <div
                   key={slideIndex}
                   className="
@@ -436,55 +659,53 @@ export default function Testimonials() {
                         flex-1
                       "
                     >
-                      <ReviewCard
-                        review={review}
-                      />
+                      <ReviewCard review={review} />
                     </div>
                   ))}
                 </div>
               ))}
             </motion.div>
           </div>
-        </div>
 
-        {/* Simple Dots Only */}
-        <div className="mt-9 flex items-center justify-center gap-2.5">
-          {SLIDES.map((_, index) => {
-            const isActive = activeSlide === index;
+          {/* Desktop Dots */}
+          <div className="mt-9 flex items-center justify-center gap-2.5">
+            {DESKTOP_SLIDES.map((_, index) => {
+              const isActive = desktopSlide === index;
 
-            return (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setActiveSlide(index)}
-                aria-label={`Show testimonial group ${index + 1}`}
-                className="
-                  flex
-                  h-6
-                  w-6
-                  items-center
-                  justify-center
-                "
-              >
-                <motion.span
-                  animate={{
-                    width: isActive ? 22 : 7,
-                    opacity: isActive ? 1 : 0.35,
-                  }}
-                  transition={{
-                    duration: 0.55,
-                    ease: EASE,
-                  }}
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setDesktopSlide(index)}
+                  aria-label={`Show testimonial group ${index + 1}`}
                   className="
-                    block
-                    h-[7px]
-                    rounded-full
-                    bg-brand
+                    flex
+                    h-6
+                    w-6
+                    items-center
+                    justify-center
                   "
-                />
-              </button>
-            );
-          })}
+                >
+                  <motion.span
+                    animate={{
+                      width: isActive ? 22 : 7,
+                      opacity: isActive ? 1 : 0.35,
+                    }}
+                    transition={{
+                      duration: 0.55,
+                      ease: EASE,
+                    }}
+                    className="
+                      block
+                      h-[7px]
+                      rounded-full
+                      bg-brand
+                    "
+                  />
+                </button>
+              );
+            })}
+          </div>
         </div>
 
       </div>

@@ -215,7 +215,7 @@ export default function Modules() {
         ======================================================= */}
 
         <div className="mb-10 md:mb-14">
-          <span className="section-eyebrow">Modules</span>
+          
 
           <h2 className="whitespace-nowrap text-ink">
             Six modules.{" "}

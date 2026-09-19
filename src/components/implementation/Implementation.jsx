@@ -94,10 +94,7 @@ export default function ImplementationProcess() {
             md:mb-16
           "
         >
-          <span className="section-eyebrow">
-            <Sparkles size={12} className="mr-1" />
-            Implementation
-          </span>
+          
 
           <h2 className="text-ink">
             Go live in just{' '}

@@ -327,7 +327,7 @@ export default function Workflow() {
         ======================================================= */}
 
         <div className="max-w-2xl">
-          <span className="section-eyebrow">Workflow</span>
+          
           <motion.h2
             initial={{
               opacity: 0,

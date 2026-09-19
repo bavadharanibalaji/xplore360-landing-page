@@ -225,8 +225,7 @@ export default function Industries() {
           }}
           className="mb-7 sm:mb-9 md:mb-10"
         >
-          <span className="section-eyebrow">Industries</span>
-
+         
           <h2 className="max-w-[680px] text-ink">
             Built for{" "}
             <span className="display-italic">

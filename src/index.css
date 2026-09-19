@@ -241,14 +241,22 @@
 }
 
 /* Highlighted phrase inside headings — emerald with an amber underscore.
-   (Kept the old utility name so every section picks it up automatically.) */
+   (Kept the old utility name so every section picks it up automatically.)
+
+   CHANGED: white-space is "normal" on phones so long highlighted
+   words can wrap instead of being cut off. From 640px up it is
+   "nowrap" again, exactly like before. */
 @utility display-italic {
   font-family: var(--font-display);
   font-style: normal;
   font-weight: 600;
   color: var(--color-brand);
   position: relative;
-  white-space: nowrap;
+  white-space: normal;
+
+  @media (min-width: 640px) {
+    white-space: nowrap;
+  }
 }
 
 @utility text-gradient {
@@ -434,4 +442,16 @@
 @keyframes wordmarkSheen {
   from { background-position: 180% 0; }
   to   { background-position: -80% 0; }
+}
+
+/* ==========================================================
+   CHANGED: MOBILE HEADING WRAPPING (phones under 640px only)
+   The sizes themselves are set in global.css.
+   This only makes sure long headings wrap instead of overflowing.
+   ========================================================== */
+@media (max-width: 639px) {
+  h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+    text-wrap: balance;
+  }
 }

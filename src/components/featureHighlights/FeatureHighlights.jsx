@@ -976,10 +976,7 @@ export default function FeatureHighlights() {
           }}
           className="mb-10 md:mb-14"
         >
-          <span className="section-eyebrow">
-            Features
-          </span>
-
+          
           <h2 className="text-ink">
             Built for{" "}
             <span className="display-italic">

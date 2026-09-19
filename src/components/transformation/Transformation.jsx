@@ -76,7 +76,7 @@ export default function Transformation() {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-10 max-w-[560px] md:mb-12"
         >
-          <span className="section-eyebrow">Before & after</span>
+          
           <h2 className="text-ink">
             Built for <span className="display-italic">modern institutes</span>
           </h2>

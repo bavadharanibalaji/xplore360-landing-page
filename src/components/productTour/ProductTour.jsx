@@ -177,7 +177,7 @@ export default function ProductTour() {
               Inside Xplore 360
             </span>
 
-            <h2 className="max-w-[850px] text-ink">
+            <h2 className="max-w-[768px] text-ink">
               One platform.
               <span className="display-italic">
                 {" "}
@@ -186,7 +186,8 @@ export default function ProductTour() {
             </h2>
           </div>
 
-          <p className="max-w-[320px] text-[13px] leading-[1.75] text-muted sm:text-sm">
+          {/* Increased header paragraph */}
+          <p className="max-w-[360px] text-[15px] leading-[1.8] text-muted sm:text-[16px]">
             Everything your institute needs to manage students, operations
             and growth in one connected platform.
           </p>
@@ -349,20 +350,22 @@ export default function ProductTour() {
                     duration: 0.45,
                     ease: EASE,
                   }}
-                  className="max-w-[530px]"
+                  className="max-w-[550px]"
                 >
                   {/* Category */}
                   <div className="mb-5 flex items-center gap-3 sm:mb-6">
-                    <span className="grid h-10 w-10 place-items-center rounded-[12px] bg-brand text-shell shadow-xl sm:h-11 sm:w-11">
+                    <span className="grid h-10 w-10 place-items-center rounded-[12px] bg-[#e9d5ff] text-[#7e22ce] shadow-md sm:h-11 sm:w-11">
                       <ActiveIcon size={17} />
                     </span>
 
                     <div>
-                      <p className="font-mono text-[7px] uppercase tracking-[0.18em] text-brand-3 sm:text-[8px]">
+                      {/* Increased from 7px → 9px */}
+                      <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-brand-3 sm:text-[10px]">
                         {active.number} / 05
                       </p>
 
-                      <p className="mt-1 text-[8px] font-semibold uppercase tracking-[0.1em] text-page-bg/50 sm:text-[9px]">
+                      {/* Increased from 8px → 10px */}
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-page-bg/55 sm:text-[11px]">
                         {active.label}
                       </p>
                     </div>
@@ -373,8 +376,12 @@ export default function ProductTour() {
                     {active.title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="mt-5 max-w-[430px] text-[10px] leading-[1.8] text-page-bg/55 sm:mt-6 sm:text-[11px] md:text-[12px]">
+                  {/* =====================================
+                      DESCRIPTION
+                      INCREASED SIZE
+                  ===================================== */}
+
+                  <p className="mt-5 max-w-[460px] text-[15px] leading-[1.7] text-page-bg/70 sm:mt-6 sm:text-[14px] sm:leading-[1.8] md:text-[15px]">
                     {active.description}
                   </p>
 
@@ -383,13 +390,15 @@ export default function ProductTour() {
                     {active.points.map((point) => (
                       <span
                         key={point}
-                        className="flex items-center gap-1.5 rounded-full border border-page-bg/10 bg-page-bg/5 px-2.5 py-1.5 backdrop-blur-md sm:px-3 sm:py-2"
+                        className="flex items-center gap-1.5 rounded-full border border-page-bg/10 bg-page-bg/5 px-3 py-1.5 backdrop-blur-md sm:px-3.5 sm:py-2"
                       >
-                        <span className="grid h-3.5 w-3.5 place-items-center rounded-full bg-brand text-shell sm:h-4 sm:w-4">
-                          <Check size={7} strokeWidth={3} />
+                        {/* Increased check badge */}
+                        <span className="grid h-4 w-4 place-items-center rounded-full bg-[#e9d5ff] text-[#7e22ce] sm:h-4 sm:w-4">
+                          <Check size={8} strokeWidth={3} />
                         </span>
 
-                        <span className="text-[7px] font-semibold text-page-bg/65 sm:text-[8px]">
+                        {/* Increased point text from 7px → 9px */}
+                        <span className="text-[9px] font-semibold text-page-bg/70 sm:text-[10px]">
                           {point}
                         </span>
                       </span>
@@ -400,12 +409,13 @@ export default function ProductTour() {
                   <div className="mt-7 flex items-center gap-3 sm:mt-9">
                     <span className="h-px w-8 bg-brand-3 sm:w-10" />
 
-                    <span className="font-mono text-[7px] uppercase tracking-[0.16em] text-page-bg/35 sm:text-[8px]">
+                    {/* Increased from 7px → 9px */}
+                    <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-page-bg/45 sm:text-[10px]">
                       {active.name}
                     </span>
 
                     <ArrowUpRight
-                      size={10}
+                      size={11}
                       className="text-brand-3"
                     />
                   </div>
@@ -435,10 +445,10 @@ export default function ProductTour() {
                   >
                     {/* Label */}
                     <span
-                      className={`absolute right-[48px] top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[7px] uppercase tracking-[0.14em] transition-all duration-300 ${
+                      className={`absolute right-[48px] top-1/2 -translate-y-1/2 whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.14em] transition-all duration-300 ${
                         isActive
-                          ? "translate-x-0 opacity-100 text-page-bg/70"
-                          : "translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 text-page-bg/40"
+                          ? "translate-x-0 opacity-100 text-page-bg/75"
+                          : "translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 text-page-bg/45"
                       }`}
                     >
                       {item.name}
@@ -448,7 +458,7 @@ export default function ProductTour() {
                     <span
                       className={`grid h-10 w-10 place-items-center rounded-full border transition-all duration-300 ${
                         isActive
-                          ? "border-brand bg-brand text-shell shadow-[0_0_0_6px_rgba(255,255,255,0.05)]"
+                          ? "border-[#d8b4fe] bg-[#e9d5ff] text-[#7e22ce] shadow-[0_0_0_4px_rgba(255,255,255,0.05)]"
                           : "border-page-bg/15 bg-shell/35 text-page-bg/35 backdrop-blur-md group-hover:border-page-bg/30 group-hover:text-page-bg/70"
                       }`}
                     >
@@ -466,7 +476,7 @@ export default function ProductTour() {
           ===================================== */}
 
           <div className="absolute bottom-7 left-5 z-30 hidden items-center gap-3 sm:left-8 md:flex lg:left-10">
-            <span className="font-mono text-[8px] text-page-bg/30">
+            <span className="font-mono text-[9px] text-page-bg/40">
               {active.number}
             </span>
 
@@ -494,7 +504,7 @@ export default function ProductTour() {
               ))}
             </div>
 
-            <span className="font-mono text-[8px] text-page-bg/30">
+            <span className="font-mono text-[9px] text-page-bg/40">
               05
             </span>
           </div>
@@ -507,14 +517,14 @@ export default function ProductTour() {
       ========================================= */}
 
       <div className="mx-auto mt-6 hidden max-w-[1400px] items-center justify-between px-5 sm:px-8 md:flex">
-        <span className="font-mono text-[7px] uppercase tracking-[0.15em] text-faint sm:text-[8px]">
+        <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-faint sm:text-[10px]">
           Built for everyday operations
         </span>
 
         <div className="flex items-center gap-2">
           <span className="h-1.5 w-1.5 rounded-full bg-brand" />
 
-          <span className="text-[7px] font-semibold uppercase tracking-[0.14em] text-muted sm:text-[8px]">
+          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-muted sm:text-[10px]">
             Xplore 360
           </span>
         </div>

@@ -262,10 +262,7 @@ export default function Journey() {
           "
         >
           {/* Eyebrow — same pattern every other section uses */}
-          <span className="section-eyebrow">
-            <Sparkles size={12} className="mr-1" />
-            Our Modules
-          </span>
+         
 
           {/* Main Heading */}
           <h2 className="text-ink">

@@ -50,7 +50,7 @@ export default function FAQ() {
             transition={{ duration: 0.6, ease: EASE }}
             className="lg:sticky lg:top-28 lg:self-start"
           >
-            <span className="section-eyebrow">Support</span>
+            
             <h2 className="text-ink">
               Everything you were <span className="display-italic">about to ask</span>
             </h2>
