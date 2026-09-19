@@ -1,0 +1,437 @@
+@import "tailwindcss";
+@import "./styles/global.css";
+
+/* ==========================================================
+   XPLORE 360 — "MERIDIAN" DESIGN SYSTEM
+   Soft lavender + violet + deep plum + signal amber
+   Geometric display type, soft radii, dotted engineering grid
+   ========================================================== */
+
+@theme {
+  /* ===== BREAKPOINTS ===== */
+  --breakpoint-lg: 992px;
+
+  /* ===== SURFACE ===== */
+  --color-page-bg: #F1ECF7;      /* warm sand — master background */
+  --color-surface: #F8F5FC;      /* raised panel */
+  --color-surface-2: #FFFFFF;    /* brightest card */
+  --color-shell: #17121F;        /* near-black forest shell */
+  --color-shell-2: #241A30;
+
+  /* ===== BRAND =====
+     Defined once in src/styles/global.css as the purple
+     color FAMILY (--color-purple-50 … 950). --color-brand,
+     --color-brand-2, --color-brand-3 and --color-brand-dark
+     are aliases into that family — do not redefine them here. */
+
+  /* ===== SECONDARY ACCENTS ===== */
+  --color-flame: #B26A00;        /* readable amber (text) */
+  --color-flame-soft: #FFE7BD;
+  --color-gold: #FFB020;         /* signal amber (fills, stars) */
+  --color-gold-soft: #FFF0D6;
+
+  /* ===== INK =====
+     One dark → light reading scale: headings sit at the darkest
+     step, body copy one step lighter (but still clearly readable),
+     with -soft/-faint reserved for secondary and tertiary text. */
+  --color-ink: #17121F;
+  --color-ink-soft: #30273A;
+  --color-muted: #574C63;
+  --color-faint: #8C819A;
+
+  /* ===== LINES ===== */
+  --color-line: #DDD3EA;
+  --color-line-soft: #EAE3F2;
+
+  /* ===== STATUS ===== */
+  --color-success: #7C3AED;
+  --color-warning: #B26A00;
+  --color-error: #C0392B;
+
+  /* ===== FONTS =====
+     Montserrat — bold, geometric display face used for every
+     heading site-wide and, at its heaviest weight, the hero.
+     Inter — the professional, highly-legible workhorse used
+     for body copy, nav links and UI text. */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Montserrat', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* ===== RADIUS — softer, more modern ===== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 30px;
+
+  /* ===== SHADOWS — cool green-tinted depth ===== */
+  --shadow-sm: 0 1px 2px rgba(23, 18, 31, 0.06);
+  --shadow-md: 0 14px 34px -16px rgba(23, 18, 31, 0.24);
+  --shadow-lg: 0 34px 70px -30px rgba(23, 18, 31, 0.34);
+  --shadow-ring: 0 0 0 1px var(--color-line);
+
+  /* ===== ANIMATIONS ===== */
+  --animate-orbit: orbitSpin 34s linear infinite;
+  --animate-orbit-rev: orbitSpin 34s linear infinite reverse;
+  --animate-drift: drift 9s ease-in-out infinite;
+  --animate-marquee: marqueeX 38s linear infinite;
+}
+
+/* ==========================================================
+   GLOBAL KEYFRAMES
+   ========================================================== */
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes marqueeX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes flow {
+  to { stroke-dashoffset: -20; }
+}
+
+/* soft pulse used by the hero core + journey nodes */
+@keyframes haloPulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50%      { opacity: 0.7;  transform: scale(1.06); }
+}
+
+/* travelling light along a connector line */
+@keyframes traceLine {
+  from { stroke-dashoffset: 300; }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* ==========================================================
+   BASE
+   ========================================================== */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-page-bg);
+    color: var(--color-ink);
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* fine grain over the sand */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -2;
+    opacity: 0.42;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.05'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* one emerald light source, top-left this time */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -14%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, transparent 66%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  #root { isolation: isolate; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: var(--color-ink);
+  }
+
+  /* Hero headline only — heaviest weight in the whole type scale,
+     everything else (h2, h3…) stays at the 700 above. */
+  h1 {
+    font-weight: 800;
+  }
+
+  /* Every heading of a given level is this exact size, everywhere
+     on the page — the hero's h1, a section's h2, a card's h3 —
+     unless a component explicitly needs a smaller inline label,
+     it should rely on these rather than a one-off px value. */
+  h1 { font-size: var(--text-h1); }
+  h2 { font-size: var(--text-h2); }
+  h3 { font-size: var(--text-h3); }
+  h4 { font-size: var(--text-h4); }
+  h5 { font-size: var(--text-h5); }
+  h6 { font-size: var(--text-h6); }
+
+  p {
+    font-size: var(--text-body);
+    line-height: 1.72;
+    color: var(--color-muted);
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: #FFFFFF;
+  }
+}
+
+/* ==========================================================
+   UTILITIES
+   ========================================================== */
+
+@utility card {
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 300ms ease,
+              box-shadow 400ms ease;
+
+  &:hover {
+    border-color: var(--color-brand);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+}
+
+@utility logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+@utility logo-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-brand);
+  font-size: 0.75rem;
+  color: #FFFFFF;
+}
+
+@utility logo-text {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--color-ink);
+}
+
+/* Highlighted phrase inside headings — emerald with an amber underscore.
+   (Kept the old utility name so every section picks it up automatically.) */
+@utility display-italic {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--color-brand);
+  position: relative;
+  white-space: nowrap;
+}
+
+@utility text-gradient {
+  background: linear-gradient(100deg, var(--color-brand-dark) 0%, var(--color-brand) 60%, var(--color-brand-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--color-brand);
+}
+
+/* Section micro-label — now a bracketed mono tag instead of a rule */
+@utility rule-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-brand);
+
+  &::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: currentColor;
+    box-shadow: 0 0 0 4px color-mix(in srgb, currentColor 18%, transparent);
+  }
+}
+
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+/* Engineering dot grid — replaces the old ruled paper everywhere */
+@utility bg-ruled {
+  background-image: radial-gradient(circle, rgba(23, 18, 31, 0.10) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+@utility bg-dots-light {
+  background-image: radial-gradient(circle, rgba(241, 236, 247, 0.14) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+@utility flow-arrow {
+  stroke-dasharray: 6, 4;
+  animation: flow 1s linear infinite;
+}
+
+/* ==========================================================
+   COMPONENTS
+   ========================================================== */
+@layer components {
+  .section-divider { position: relative; }
+
+  .section-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 82%;
+    height: 1px;
+    background: var(--color-line);
+  }
+
+  .hairline { box-shadow: inset 0 0 0 1px var(--color-line); }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* frosted floating nav island */
+  .nav-island {
+    background: color-mix(in srgb, var(--color-page-bg) 82%, transparent);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid color-mix(in srgb, var(--color-ink) 9%, transparent);
+    box-shadow: 0 18px 44px -26px rgba(23, 18, 31, 0.4);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ==========================================================
+   FOOTER WORDMARK — emerald light rises through the letters
+   ========================================================== */
+.wordmark-wrap {
+  position: relative;
+  cursor: default;
+  isolation: isolate;
+}
+
+.wordmark {
+  display: block;
+  background-image: linear-gradient(
+    180deg,
+    rgba(241, 236, 247, 0.16) 0%,
+    rgba(241, 236, 247, 0.05) 52%,
+    rgba(124, 58, 237, 0.00) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(241, 236, 247, 0.13);
+  transform: translateY(0);
+  transition:
+    -webkit-text-stroke-color 700ms ease,
+    letter-spacing 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1000ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 700ms ease;
+}
+
+.wordmark-wrap:hover .wordmark {
+  -webkit-text-stroke-color: rgba(196, 181, 253, 0.5);
+  letter-spacing: 0.005em;
+  transform: translateY(-6px);
+  filter: drop-shadow(0 22px 46px rgba(124, 58, 237, 0.3));
+}
+
+/* emerald light that rises from the baseline on hover */
+.wordmark-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -30%;
+  width: 70%;
+  height: 90%;
+  transform: translateX(-50%) scaleY(0.5);
+  transform-origin: bottom center;
+  background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.42), transparent 68%);
+  opacity: 0;
+  filter: blur(26px);
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 800ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wordmark-wrap:hover .wordmark-glow {
+  opacity: 1;
+  transform: translateX(-50%) scaleY(1);
+}
+
+/* horizontal scan line that sweeps the letters */
+.wordmark-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 40%,
+    rgba(196, 181, 253, 0.3) 50%,
+    transparent 60%
+  );
+  background-size: 260% 100%;
+  background-position: 180% 0;
+  mix-blend-mode: screen;
+  transition: opacity 600ms ease;
+}
+
+.wordmark-wrap:hover .wordmark-sheen {
+  opacity: 1;
+  animation: wordmarkSheen 2.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes wordmarkSheen {
+  from { background-position: 180% 0; }
+  to   { background-position: -80% 0; }
+}

@@ -1,0 +1,161 @@
+/* ==========================================================
+   GLOBAL.CSS — Xplore 360 shared design tokens
+   ----------------------------------------------------------
+   Single source of truth for:
+   1. Font sizes  (every heading level + body copy, site-wide)
+   2. Colors      (one purple FAMILY, light → dark, not one flat purple)
+   3. Spacing     (the hero's padding rhythm, reused by every section)
+
+   Rule of thumb for anyone editing sections later:
+   - Never hardcode a px font-size on a heading or paragraph.
+     Use the classes below (or the plain h1–h6 / p tags, which
+     already pick these up automatically from index.css).
+   - Never hardcode a purple hex value. Use one of the
+     --color-purple-* steps, or the semantic --color-brand*
+     aliases that point at them.
+   - Never hardcode section padding. Use the `.section-pad`
+     utility (or `.section-pad-tight` for smaller sections).
+   ========================================================== */
+
+@theme {
+  /* ===========================================================
+     1. TYPE SCALE — one size per level, used everywhere
+  =========================================================== */
+  --text-eyebrow: 0.6875rem;                 /* micro label / tag */
+  --text-body-sm: 0.8125rem;                 /* 13px small print */
+  --text-body: 1rem;                         /* default paragraph */
+  --text-body-lg: 1.0625rem;                 /* lead paragraph under an h2 */
+
+  --text-h6: 1.05rem;
+  --text-h5: 1.25rem;
+  --text-h4: clamp(1.2rem, 2vw, 1.6rem);
+  --text-h3: clamp(1.5rem, 3vw, 2.3rem);
+  --text-h2: clamp(2rem, 4.4vw, 3.3rem);      /* every section heading */
+  --text-h1: clamp(2.5rem, 5.6vw, 4.4rem);    /* hero heading only */
+
+  /* ===========================================================
+     2. PURPLE COLOR FAMILY — dark to light, one family only
+     (existing --color-brand / brand-2 / brand-3 / brand-dark
+     are kept and now simply point into this scale, so nothing
+     that already references them breaks.)
+  =========================================================== */
+  --color-purple-950: #2E1065;
+  --color-purple-900: #3B0F70;
+  --color-purple-800: #4C1D95;   /* = old brand-dark */
+  --color-purple-700: #5B21B6;
+  --color-purple-600: #6D28D9;
+  --color-purple-500: #7C3AED;   /* = old brand (primary) */
+  --color-purple-400: #9333EA;   /* = old brand-2 */
+  --color-purple-300: #A855F7;
+  --color-purple-200: #C4B5FD;   /* = old brand-3 */
+  --color-purple-100: #DDD3EA;
+  --color-purple-50:  #F1ECF7;
+
+  /* semantic aliases — keep using these in components */
+  --color-brand: var(--color-purple-500);
+  --color-brand-2: var(--color-purple-400);
+  --color-brand-3: var(--color-purple-200);
+  --color-brand-dark: var(--color-purple-800);
+  --color-brand-deep: var(--color-purple-900);
+  --color-brand-tint: var(--color-purple-100);
+  --color-brand-wash: var(--color-purple-50);
+
+  /* ===========================================================
+     3. SECTION RHYTHM — one shared top/bottom + left/right
+     rhythm reused by every section below the hero so the page
+     breathes consistently. (The hero itself stays a special
+     full-viewport case — it needs its own min-height and
+     vertical centering — but every section after it uses this.)
+  =========================================================== */
+  --section-py-mobile: 4rem;     /* 64px */
+  --section-py-tablet: 5rem;     /* 80px */
+  --section-py-desktop: 6rem;    /* 96px */
+
+  --section-px-mobile: 1.25rem;  /* matches hero px-5 */
+  --section-px-tablet: 2rem;     /* matches hero sm:px-8 */
+  --section-px-desktop: 2.5rem;  /* matches hero lg:px-10 */
+}
+
+@layer utilities {
+  /* Standard vertical rhythm for a full section — use on every
+     top-level <section>. Matches the hero's own spacing. */
+  .section-pad {
+    padding-top: var(--section-py-mobile);
+    padding-bottom: var(--section-py-mobile);
+  }
+  @media (min-width: 640px) {
+    .section-pad {
+      padding-top: var(--section-py-tablet);
+      padding-bottom: var(--section-py-tablet);
+    }
+  }
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-top: var(--section-py-desktop);
+      padding-bottom: var(--section-py-desktop);
+    }
+  }
+
+  /* Slightly tighter version for compact sections (dividers,
+     stat bars, follow-up strips) */
+  .section-pad-tight {
+    padding-top: calc(var(--section-py-mobile) * 0.6);
+    padding-bottom: calc(var(--section-py-mobile) * 0.6);
+  }
+  @media (min-width: 640px) {
+    .section-pad-tight {
+      padding-top: calc(var(--section-py-tablet) * 0.6);
+      padding-bottom: calc(var(--section-py-tablet) * 0.6);
+    }
+  }
+
+  /* Standard horizontal container padding — matches hero's
+     inner max-width wrapper */
+  .section-px {
+    padding-left: var(--section-px-mobile);
+    padding-right: var(--section-px-mobile);
+  }
+  @media (min-width: 640px) {
+    .section-px {
+      padding-left: var(--section-px-tablet);
+      padding-right: var(--section-px-tablet);
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-px {
+      padding-left: var(--section-px-desktop);
+      padding-right: var(--section-px-desktop);
+    }
+  }
+
+  /* Section eyebrow — the small tag that sits above every
+     section heading, in the same spot the logo sits in the
+     navbar: top-left of the content block, same size everywhere */
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-brand);
+    margin-bottom: 1rem;
+  }
+
+  /* Lead paragraph directly under a section heading — the
+     one-liner every section should have under its <h2> */
+  .section-lead {
+    margin-top: 1rem;
+    max-width: 46rem;
+    font-size: var(--text-body-sm);
+    line-height: 1.7;
+    color: var(--color-muted);
+  }
+  @media (min-width: 640px) {
+    .section-lead {
+      font-size: var(--text-body);
+    }
+  }
+}
