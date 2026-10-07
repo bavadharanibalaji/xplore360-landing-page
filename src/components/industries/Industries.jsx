@@ -199,7 +199,7 @@ export default function Industries() {
     <section
       id="industries"
       ref={sectionRef}
-      className="relative w-full overflow-hidden section-pad section-pad-no-top section-pad-no-bottom"
+      className="relative w-full overflow-hidden  section-pad"
     >
       <div className="mx-auto w-full max-w-[1240px] px-4 sm:px-8">
 

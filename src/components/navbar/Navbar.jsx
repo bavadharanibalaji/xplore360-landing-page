@@ -22,6 +22,40 @@ import DemoDialog from "../demo/DemoDialog";
 const PHONE = "+91 90257 84560";
 
 /* ============================================================
+   MOBILE MENU STYLES  (edit colors / sizes here)
+   Each value is a complete class string so Tailwind can see it.
+============================================================ */
+
+const M = {
+  // Hamburger (open) button - same as desktop border/bg tokens
+  hamburger: "border-line bg-surface-2 text-ink hover:border-ink/30",
+  hamburgerIcon: 22,
+
+  // Overlay behind the panel
+  overlay: "bg-ink/45 backdrop-blur-sm",
+
+  // Panel - same light background as the desktop navbar
+  panel: "bg-page-bg border-l border-line",
+  panelPattern: "opacity-[0.05]",
+
+  // "Menu" label
+  menuLabel: "text-[10px] text-brand",
+
+  // Close (X) button
+  closeBtn: "border-line bg-surface-2 text-ink hover:border-ink/30",
+
+  // Links - same colors as desktop nav (ink-soft / brand-dark / brand)
+  linkNum: "text-[10.5px] text-brand/70",
+  linkNumActive: "text-[10.5px] text-brand",
+  linkText: "text-[20px] text-ink-soft group-hover:text-brand-dark",
+  linkTextActive: "text-[20px] text-brand-dark",
+  divider: "border-line",
+
+  // Phone - same as desktop phone link
+  phone: "text-[13px] text-ink-soft hover:text-brand",
+};
+
+/* ============================================================
    MOBILE PANEL ANIMATION
 ============================================================ */
 
@@ -271,7 +305,6 @@ export default function Navbar() {
             }
             className="flex items-center"
           >
-            {/* Increased logo size */}
             <div
               className={`flex items-center transition-all duration-500 ${
                 scrolled
@@ -371,19 +404,17 @@ export default function Navbar() {
               </Button>
             </div>
 
-            {/* MOBILE MENU BUTTON */}
+            {/* MOBILE MENU BUTTON (hamburger) */}
 
             <button
               type="button"
-              onClick={() =>
-                setMenuOpen(true)
-              }
+              onClick={() => setMenuOpen(true)}
               aria-label="Open menu"
               aria-expanded={menuOpen}
-              className="grid h-10 w-10 cursor-pointer place-items-center rounded-[10px] border border-line bg-surface-2 text-ink transition-colors hover:border-ink/30 lg:hidden"
+              className={`grid h-10 w-10 cursor-pointer place-items-center rounded-[10px] border transition-colors lg:hidden ${M.hamburger}`}
             >
               <Menu
-                size={18}
+                size={M.hamburgerIcon}
                 strokeWidth={2.2}
               />
             </button>
@@ -415,22 +446,12 @@ export default function Navbar() {
             ================================================== */}
 
             <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-              onClick={() =>
-                setMenuOpen(false)
-              }
-              className="fixed inset-0 z-[60] bg-ink/45 backdrop-blur-sm lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={() => setMenuOpen(false)}
+              className={`fixed inset-0 z-[60] lg:hidden ${M.overlay}`}
             />
 
             {/* =================================================
@@ -442,33 +463,32 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-[400px] flex-col bg-shell px-7 py-7 lg:hidden"
+              className={`fixed inset-y-0 right-0 z-[70] flex w-[86%] max-w-[400px] flex-col px-7 py-7 lg:hidden ${M.panel}`}
             >
               {/* Background Pattern */}
 
-              <div className="pointer-events-none absolute inset-0 bg-ruled opacity-[0.12]" />
+              <div
+                className={`pointer-events-none absolute inset-0 bg-ruled ${M.panelPattern}`}
+              />
 
               {/* =================================================
                   PANEL HEADER
               ================================================== */}
 
               <div className="relative mb-12 flex items-center justify-between">
-                <span className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-brand-3">
+                <span
+                  className={`font-bold uppercase tracking-[0.24em] ${M.menuLabel}`}
+                >
                   Menu
                 </span>
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setMenuOpen(false)
-                  }
+                  onClick={() => setMenuOpen(false)}
                   aria-label="Close menu"
-                  className="grid h-10 w-10 cursor-pointer place-items-center rounded-[10px] border border-page-bg/25 text-page-bg transition-colors hover:bg-page-bg/10"
+                  className={`grid h-10 w-10 cursor-pointer place-items-center rounded-[10px] border transition-colors ${M.closeBtn}`}
                 >
-                  <X
-                    size={18}
-                    strokeWidth={2.2}
-                  />
+                  <X size={18} strokeWidth={2.2} />
                 </button>
               </div>
 
@@ -476,38 +496,54 @@ export default function Navbar() {
                   MOBILE LINKS
               ================================================== */}
 
-              <ul className="relative m-0 flex flex-1 list-none flex-col gap-1 p-0">
-                {NAV_LINKS.map((link, index) => (
-                  <motion.li
-                    key={link.id}
-                    variants={linkVariants}
-                  >
-                    <a
-                      href={link.href}
-                      onClick={(event) =>
-                        goTo(
-                          event,
-                          link.href
-                        )
-                      }
-                      className="group flex items-baseline gap-4 border-b border-page-bg/10 py-4"
+              <ul className="relative m-0 flex flex-1 list-none flex-col gap-1 overflow-y-auto p-0">
+                {NAV_LINKS.map((link, index) => {
+                  const isActive =
+                    activeId ===
+                    link.href.replace("#", "");
+
+                  return (
+                    <motion.li
+                      key={link.id}
+                      variants={linkVariants}
                     >
-                      {/* Number */}
+                      <a
+                        href={link.href}
+                        onClick={(event) =>
+                          goTo(event, link.href)
+                        }
+                        className={`group flex items-baseline gap-4 border-b py-3 ${M.divider}`}
+                      >
+                        {/* Number */}
 
-                      <span className="font-mono text-[11px] text-brand-3/70">
-                        {String(
-                          index + 1
-                        ).padStart(2, "0")}
-                      </span>
+                        <span
+                          className={`font-mono ${
+                            isActive
+                              ? M.linkNumActive
+                              : M.linkNum
+                          }`}
+                        >
+                          {String(index + 1).padStart(
+                            2,
+                            "0"
+                          )}
+                        </span>
 
-                      {/* Label */}
+                        {/* Label */}
 
-                      <span className="font-display text-[26px] font-normal text-page-bg transition-transform duration-400 group-hover:translate-x-1">
-                        {link.label}
-                      </span>
-                    </a>
-                  </motion.li>
-                ))}
+                        <span
+                          className={`font-display font-normal transition-transform duration-300 group-hover:translate-x-1 ${
+                            isActive
+                              ? M.linkTextActive
+                              : M.linkText
+                          }`}
+                        >
+                          {link.label}
+                        </span>
+                      </a>
+                    </motion.li>
+                  );
+                })}
               </ul>
 
               {/* =================================================
@@ -521,7 +557,7 @@ export default function Navbar() {
                 {/* Demo Button */}
 
                 <Button
-                  variant="light"
+                  variant="primary"
                   size="lg"
                   full
                   onClick={() => {
@@ -537,7 +573,7 @@ export default function Navbar() {
 
                 <a
                   href={`tel:${PHONE}`}
-                  className="flex items-center justify-center gap-2 text-[13px] font-semibold text-page-bg/60 transition-colors hover:text-page-bg"
+                  className={`flex items-center justify-center gap-2 font-semibold transition-colors ${M.phone}`}
                 >
                   <Phone size={14} />
                   {PHONE}
@@ -554,9 +590,7 @@ export default function Navbar() {
 
       <DemoDialog
         isOpen={isDemoOpen}
-        onClose={() =>
-          setIsDemoOpen(false)
-        }
+        onClose={() => setIsDemoOpen(false)}
       />
     </>
   );

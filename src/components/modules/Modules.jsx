@@ -157,10 +157,7 @@ export default function Modules() {
       className="
         relative
         overflow-hidden
-        pt-8
-        pb-6
-        md:pt-12
-        md:pb-10
+       section-pad
       "
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}

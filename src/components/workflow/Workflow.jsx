@@ -216,8 +216,7 @@ export default function Workflow() {
         w-full
         overflow-hidden
         bg-[var(--color-page-bg)]
-        section-pad
-        section-pad-no-top
+       section-pad
       "
     >
       {/* ========================================================

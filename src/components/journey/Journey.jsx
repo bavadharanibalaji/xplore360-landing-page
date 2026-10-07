@@ -229,7 +229,7 @@ export default function Journey() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden bg-page-bg section-px section-pad section-pad-top-roomy section-pad-no-bottom"
+      className="relative w-full overflow-hidden bg-page-bg section-px  section-pad"
     >
       <div className="mx-auto w-full max-w-[1280px]">
 

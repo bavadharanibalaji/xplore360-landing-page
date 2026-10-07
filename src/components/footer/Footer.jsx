@@ -2,13 +2,14 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Phone, MapPin, Mail, ArrowUpRight, ArrowUp } from "lucide-react";
 import {
-  Phone,
-  MapPin,
-  Mail,
-  ArrowUpRight,
-  ArrowUp,
-} from "lucide-react";
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 import DemoDialog from "../demo/DemoDialog";
 import Button from "../ui/Button";
@@ -29,46 +30,50 @@ const iconProps = {
   strokeLinejoin: "round",
 };
 
-function FacebookIcon(props) {
+/* ============================================================
+   Brand social icons (white glyphs, drawn on coloured tiles)
+============================================================ */
+
+function FacebookIcon({ size = 20, ...props }) {
   return (
-    <svg {...iconProps} {...props}>
-      <path d="M15 3h-2a5 5 0 0 0-5 5v3H6v4h2v6h4v-6h3l1-4h-4V8a1 1 0 0 1 1-1h3z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.95.4-1.7 1.8-1.7h1.6V3.8c-.3 0-1.3-.1-2.4-.1-2.5 0-4.2 1.5-4.2 4.3v2.5H7.5v3.3h2.8V22z" />
     </svg>
   );
 }
 
-function InstagramIcon(props) {
+function InstagramIcon({ size = 20, ...props }) {
   return (
-    <svg {...iconProps} {...props}>
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle
-        cx="17.5"
-        cy="6.5"
-        r="1"
-        fill="currentColor"
-        stroke="none"
-      />
+      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-function LinkedinIcon(props) {
+function LinkedinIcon({ size = 20, ...props }) {
   return (
-    <svg {...iconProps} {...props}>
-      <rect x="3" y="3" width="18" height="18" rx="3" />
-      <line x1="8" y1="11" x2="8" y2="16" />
-      <line x1="8" y1="8" x2="8" y2="8" />
-      <path d="M12 16v-3a2 2 0 0 1 4 0v3" />
-      <line x1="16" y1="11" x2="16" y2="16" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z" />
     </svg>
   );
 }
 
-function TwitterIcon(props) {
+function TwitterIcon({ size = 20, ...props }) {
   return (
-    <svg {...iconProps} {...props}>
-      <path d="M4 4l7.5 9.5L4.5 20H7l5-5.8L16.5 20H20l-7.8-9.9L19.5 4H17l-4.7 5.4L8 4z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
     </svg>
   );
 }
@@ -124,8 +129,7 @@ const COLUMNS = [
 ============================================================ */
 
 const CONTACT = {
-  address:
-    "12/46, 9th St, Siddhapudur, Tatabad, Coimbatore, Tamil Nadu 641012",
+  address: "12/46, 9th St, Siddhapudur, Tatabad, Coimbatore, Tamil Nadu 641012",
   phone: "+91 90257 84560",
   email: "info@xploreintellects.com",
 };
@@ -137,23 +141,34 @@ const CONTACT = {
 const SOCIALS = [
   {
     label: "Facebook",
-    icon: FacebookIcon,
-    href: "#",
+    icon: FaFacebookF,
+    href: "https://www.facebook.com/xplore_intellects",
+    background: "#1877F2",
   },
   {
     label: "Instagram",
-    icon: InstagramIcon,
-    href: "#",
+    icon: FaInstagram,
+    href: "https://www.instagram.com/xplore_intellects",
+    background:
+      "linear-gradient(45deg, #FEDA75 0%, #FA7E1E 25%, #D62976 50%, #962FBF 75%, #4F5BD5 100%)",
   },
   {
     label: "LinkedIn",
-    icon: LinkedinIcon,
-    href: "#",
+    icon: FaLinkedinIn,
+    href: "https://www.linkedin.com/company/103691931",
+    background: "#0A66C2",
+  },
+  {
+    label: "WhatsApp",
+    icon: FaWhatsapp,
+    href: "https://wa.me/919025784560",
+    background: "#25D366",
   },
   {
     label: "Twitter / X",
-    icon: TwitterIcon,
-    href: "#",
+    icon: FaXTwitter,
+    href: "https://x.com/xplore_intellects",
+    background: "#000000",
   },
 ];
 
@@ -186,7 +201,6 @@ export default function Footer() {
       </div>
 
       <div className="relative mx-auto w-full max-w-[1280px] section-px">
-
         {/* ===================================================
             CTA + NEWSLETTER
 
@@ -208,9 +222,7 @@ export default function Footer() {
               Ready when you are
             </span>
 
-            <h2 className="text-page-bg">
-              Digitise your institution.
-            </h2>
+            <h2 className="text-page-bg">Digitise your institution.</h2>
 
             <p className="mt-4 max-w-[440px] text-[14px] leading-[1.7] text-page-bg/55">
               Admissions, student management, attendance, fee collection,
@@ -284,35 +296,31 @@ export default function Footer() {
         =================================================== */}
 
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-14 sm:gap-x-10 md:grid-cols-12 md:gap-x-9 md:py-14">
-
           {/* =================================================
               BRAND / CONTACT
           ================================================= */}
 
           <div className="col-span-2 md:col-span-4">
-
             <div className="flex items-center">
-              <img
-                src={logo}
-                alt="Xplore 360"
-                className="h-12 w-auto object-contain brightness-[1.5] contrast-110"
-              />
+              <div className="flex items-center">
+                <img
+                  src={logo}
+                  alt="Xplore 360"
+                  className="h-16 w-auto object-contain brightness-[1.5] contrast-110 md:h-28"
+                />
+              </div>
             </div>
 
             <p className="mt-4 max-w-[300px] text-[13.5px] leading-[1.7] text-page-bg/50">
-              A complete institute management and CRM platform built for
-              modern educational institutions.
+              A complete institute management and CRM platform built for modern
+              educational institutions.
             </p>
 
             {/* CONTACT DETAILS */}
 
             <ul className="mt-6 flex list-none flex-col gap-3.5 p-0">
-
               <li className="flex gap-3">
-                <MapPin
-                  size={16}
-                  className="mt-0.5 shrink-0 text-page-bg/40"
-                />
+                <MapPin size={16} className="mt-0.5 shrink-0 text-page-bg/40" />
 
                 <span className="max-w-[290px] text-[13px] leading-[1.6] text-page-bg/50">
                   {CONTACT.address}
@@ -320,10 +328,7 @@ export default function Footer() {
               </li>
 
               <li className="flex gap-3">
-                <Phone
-                  size={16}
-                  className="mt-0.5 shrink-0 text-page-bg/40"
-                />
+                <Phone size={16} className="mt-0.5 shrink-0 text-page-bg/40" />
 
                 <a
                   href={`tel:${CONTACT.phone}`}
@@ -334,10 +339,7 @@ export default function Footer() {
               </li>
 
               <li className="flex gap-3">
-                <Mail
-                  size={16}
-                  className="mt-0.5 shrink-0 text-page-bg/40"
-                />
+                <Mail size={16} className="mt-0.5 shrink-0 text-page-bg/40" />
 
                 <a
                   href={`mailto:${CONTACT.email}`}
@@ -346,20 +348,24 @@ export default function Footer() {
                   {CONTACT.email}
                 </a>
               </li>
-
             </ul>
 
             {/* SOCIAL ICONS */}
 
-            <div className="mt-6 flex items-center gap-2.5">
-              {SOCIALS.map(({ label, icon: Icon, href }) => (
+            {/* SOCIAL ICONS */}
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              {SOCIALS.map(({ label, icon: Icon, href, background }) => (
                 <a
                   key={label}
                   href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-page-bg/10 text-page-bg/50 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-3/40 hover:text-page-bg"
+                  style={{ background }}
+                  className="grid h-10 w-10 place-items-center rounded-full text-white ring-1 ring-white/15 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-[0_10px_24px_-8px_rgba(0,0,0,0.6)] md:h-12 w-12"
                 >
-                  <Icon size={15} />
+                  <Icon size={24} />
                 </a>
               ))}
             </div>
@@ -421,7 +427,6 @@ export default function Footer() {
         =================================================== */}
 
         <div className="flex flex-col items-center justify-between gap-4 border-t border-page-bg/10 py-6 sm:flex-row">
-
           <p className="m-0 text-[12px] text-page-bg/40">
             © {new Date().getFullYear()} Xplore Intellects Inc. All rights
             reserved.
@@ -438,7 +443,6 @@ export default function Footer() {
             className="group flex cursor-pointer items-center gap-2 bg-transparent text-[11px] font-medium uppercase tracking-[0.12em] text-page-bg/45 transition-colors hover:text-page-bg"
           >
             Back to top
-
             <span className="grid h-6 w-6 place-items-center rounded-full border border-page-bg/15 transition-transform duration-200 group-hover:-translate-y-0.5">
               <ArrowUp size={12} />
             </span>
@@ -543,10 +547,7 @@ export default function Footer() {
           DEMO DIALOG
       ===================================================== */}
 
-      <DemoDialog
-        isOpen={isDemoOpen}
-        onClose={() => setIsDemoOpen(false)}
-      />
+      <DemoDialog isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
     </footer>
   );
 }

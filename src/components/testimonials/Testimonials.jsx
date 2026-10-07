@@ -14,6 +14,21 @@ const EASE = [0.22, 1, 0.36, 1];
 const SLIDE_TIME = 3200;
 const ANIMATION_TIME = 1.15;
 
+/* Titles ignored when picking the first letter */
+const TITLES = ["dr", "mr", "mrs", "ms", "prof", "er"];
+
+function getInitial(name = "") {
+  const words = name
+    .trim()
+    .split(/\s+/)
+    .filter(
+      (word) =>
+        !TITLES.includes(word.replace(".", "").toLowerCase())
+    );
+
+  return (words[0] || name).charAt(0).toUpperCase();
+}
+
 const REVIEWS = [
   {
     id: 1,
@@ -23,68 +38,56 @@ const REVIEWS = [
     quote:
       "Xplore 360 has completely changed how we manage our institution. Everything from admissions and fees to attendance and parent communication is now connected in one place.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/men/32.jpg",
   },
 
   {
     id: 2,
-    name: "Priya Nair",
+    name: "Priya Lakshmi",
     role: "Academic Coordinator",
     org: "Educational Institution",
     quote:
       "The automation has made a huge difference to our daily workflow. Reminders and updates reach parents automatically without our team having to follow up manually.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/women/44.jpg",
   },
 
   {
     id: 3,
-    name: "Sunita Menon",
+    name: "Meenakshi Sundaram",
     role: "Administrator",
     org: "Multi-Branch Institute",
     quote:
       "Earlier, our staff spent so much time answering routine questions. With Xplore 360, parents access what they need directly, while our team focuses on running the institution.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/women/65.jpg",
   },
 
   {
     id: 4,
-    name: "Arun Prasad",
+    name: "Karthikeyan Subramanian",
     role: "Director",
     org: "Growing Institution",
     quote:
       "Rolling out Xplore 360 across two branches was far smoother than expected. One dashboard, one system, both locations fully in sync.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/men/46.jpg",
   },
 
   {
     id: 5,
-    name: "Kavitha Raj",
+    name: "Kavitha Rajan",
     role: "Vice Principal",
     org: "City Public School",
     quote:
       "Fee collection used to take days to reconcile. Now it is tracked automatically and reports generate themselves.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/women/49.jpg",
   },
 
   {
     id: 6,
-    name: "Mohammed Yusuf",
+    name: "Abdul Rahman",
     role: "Head of Admissions",
     org: "State College",
     quote:
       "Admission season used to overwhelm our front desk. The workflow now handles most of it without extra staff.",
     rating: 5,
-    image:
-      "https://randomuser.me/api/portraits/men/52.jpg",
   },
 ];
 
@@ -211,23 +214,30 @@ function ReviewCard({ review }) {
           sm:pt-5
         "
       >
-        <img
-          src={review.image}
-          alt={review.name}
-          loading="lazy"
+        {/* Round avatar with first letter of the name */}
+        <span
+          aria-hidden="true"
           className="
+            grid
             h-10
             w-10
             shrink-0
+            place-items-center
             rounded-full
-            object-cover
-            object-center
+            bg-brand
+            text-[15px]
+            font-bold
+            uppercase
+            text-white
             ring-2
             ring-brand/10
             sm:h-12
             sm:w-12
+            sm:text-[17px]
           "
-        />
+        >
+          {getInitial(review.name)}
+        </span>
 
         <div className="min-w-0 flex-1">
           <p
