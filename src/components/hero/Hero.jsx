@@ -130,7 +130,9 @@ function Orbit() {
         mx-auto
         aspect-square
         w-full
+        scale-[0.8]
         max-w-[min(72vw,270px)]
+        sm:scale-100
         sm:max-w-[min(64vw,380px)]
         lg:max-w-[440px]
       "
