@@ -69,7 +69,7 @@
   =========================================================== */
   --section-py-mobile: 4rem;     /* 64px */
   --section-py-tablet: 5rem;     /* 80px */
-  --section-py-desktop: 6rem;    /* 96px */
+  --section-py-desktop: 8rem;    /* 128px */
 
   --section-px-mobile: 1.25rem;  /* matches hero px-5 */
   --section-px-tablet: 2rem;     /* matches hero sm:px-8 */
@@ -127,6 +127,41 @@
     .section-pad-tight {
       padding-top: calc(var(--section-py-tablet) * 0.6);
       padding-bottom: calc(var(--section-py-tablet) * 0.6);
+    }
+  }
+
+  /* Reduce only the bottom or only the top padding of a
+     section. Always put these AFTER `section-pad` on the element,
+     and keep them below the .section-pad rules in this file so
+     they win. Use together on two neighbouring sections to close
+     the empty gap between them. */
+  .section-pad-no-bottom {
+    padding-bottom: 1.5rem;   /* 24px mobile */
+  }
+  @media (min-width: 768px) {
+    .section-pad-no-bottom {
+      padding-bottom: 2.5rem;    /* 40px desktop */
+    }
+  }
+
+  .section-pad-no-top {
+    padding-top: 1.5rem;      /* 24px mobile */
+  }
+  @media (min-width: 768px) {
+    .section-pad-no-top {
+      padding-top: 3.5rem;       /* 56px desktop */
+    }
+  }
+
+  /* NEW: roomier top padding, for a section that needs more
+     space above its header than .section-pad-no-top gives.
+     Use it INSTEAD of section-pad-no-top, not together. */
+  .section-pad-top-roomy {
+    padding-top: 3rem;         /* 32px mobile */
+  }
+  @media (min-width: 768px) {
+    .section-pad-top-roomy {
+      padding-top: 5.5rem;     /* 72px desktop */
     }
   }
 

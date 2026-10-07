@@ -157,8 +157,10 @@ export default function Modules() {
       className="
         relative
         overflow-hidden
-        py-20
-        md:py-32
+        pt-20
+        pb-6
+        md:pt-32
+        md:pb-8
       "
       onMouseMove={handlePointerMove}
       onMouseLeave={handlePointerLeave}

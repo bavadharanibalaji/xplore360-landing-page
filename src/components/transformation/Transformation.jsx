@@ -64,7 +64,7 @@ export default function Transformation() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden section-pad"
+      className="relative w-full overflow-hidden section-pad section-pad-no-top"
     >
       <div className="mx-auto w-full max-w-[1080px] px-5 sm:px-8">
 
