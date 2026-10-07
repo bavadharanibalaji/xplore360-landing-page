@@ -157,7 +157,7 @@
      space above its header than .section-pad-no-top gives.
      Use it INSTEAD of section-pad-no-top, not together. */
   .section-pad-top-roomy {
-    padding-top: 3rem;         /* 32px mobile */
+    padding-top: 4rem;         /* 32px mobile */
   }
   @media (min-width: 768px) {
     .section-pad-top-roomy {
